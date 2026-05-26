@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.ingestor import load_and_chunk_pdf
 from app.embedder import get_embedding_model
-from app.retriever import build_vector_store, load_vector_store, get_retriever
+from app.retriever import build_vector_store, get_retriever
 
 TEST_PDF_PATH = "tests/fixtures/test_sample.pdf"
 TEST_CHROMA_DIR = "tests/fixtures/test_chroma_db"
