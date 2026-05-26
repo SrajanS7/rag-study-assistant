@@ -61,7 +61,7 @@ def format_docs(docs: list[Document]) -> str:
         page = doc.metadata.get("page", "N/A")
         # Add page number as a hint so LLaMA3 can cite it
         formatted.append(
-            f"[Source: {source}, Page {page}]\n{doc.page_content}"
+            f"[Source: {source}, Page {page + 1}]\n{doc.page_content}"
         )
     return "\n\n".join(formatted)
 
