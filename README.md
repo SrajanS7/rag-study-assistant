@@ -171,4 +171,4 @@ MIT License — feel free to use, modify, and distribute.
 
 **Srajan Sharma**  
 M.Sc. Computer Science — Paderborn University  
-[LinkedIn](https://linkedin.com/in/srajan-sharma) · [GitHub](https://github.com/SrajanS7)
+[LinkedIn](https://www.linkedin.com/in/srajan-sharma-671626222/) · [GitHub](https://github.com/SrajanS7)
