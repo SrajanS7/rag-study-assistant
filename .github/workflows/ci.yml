@@ -1,0 +1,72 @@
+# ci.yml — GitHub Actions CI Pipeline
+# -------------------------------------
+# Runs on every push and pull request to main.
+# Steps:
+#   1. Lint with ruff (catches syntax errors, unused imports, style issues)
+#   2. Run pytest unit tests
+#
+# Note: Ollama/LLaMA3 is NOT tested in CI — it requires a local GPU/CPU
+# environment. Chain tests are excluded; ingestor and retriever are tested.
+
+name: RAG Study Assistant CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install fpdf2
+
+      - name: Create test fixture PDF
+        run: |
+          python3 - << 'EOF'
+          from fpdf import FPDF
+          import os
+          os.makedirs("tests/fixtures", exist_ok=True)
+          pdf = FPDF()
+          pdf.add_page()
+          pdf.set_font("Helvetica", size=12)
+          pdf.multi_cell(0, 10, (
+              "Introduction to Machine Learning\n\n"
+              "Machine learning is a subset of artificial intelligence. "
+              "It enables systems to learn from data and improve over time.\n\n"
+              "Deep Learning\n\n"
+              "Deep learning uses multi-layered neural networks. "
+              "It powers image recognition and natural language processing."
+          ))
+          pdf.output("tests/fixtures/test_sample.pdf")
+          EOF
+
+      - name: Lint with ruff
+        run: |
+          ruff check app/ tests/
+
+      - name: Run tests
+        run: |
+          pytest tests/ -v

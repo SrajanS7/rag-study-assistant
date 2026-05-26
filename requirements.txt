@@ -1,0 +1,23 @@
+# Document loading & RAG orchestration
+langchain==0.2.16
+langchain-community==0.2.16
+langchain-core==0.2.38
+
+# PDF parsing
+pypdf==4.3.1
+
+# Embeddings (free, local)
+sentence-transformers==3.0.1
+
+# Vector store
+chromadb==0.5.5
+
+# Local LLM via Ollama
+ollama==0.3.3
+
+# UI
+streamlit==1.38.0
+
+# Linting & testing (dev)
+pytest==8.3.2
+ruff==0.6.4
