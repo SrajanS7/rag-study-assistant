@@ -21,3 +21,5 @@ streamlit==1.38.0
 # Linting & testing (dev)
 pytest==8.3.2
 ruff==0.6.4
+
+langchain-huggingface==0.0.3
